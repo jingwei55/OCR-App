@@ -6,7 +6,7 @@ import {
   View,
   Button,
   TextInput,
-  ScrollView,
+  FlatList,
 } from "react-native";
 //core components, must import elements you are using
 
@@ -38,17 +38,16 @@ export default function App() {
       </View>
       <View style={styles.goalsContainer}>
         {/* dictate amount of space */}
-        <ScrollView>
-          {/* make sure elements within space is scrollable */}
-          {courseGoals.map((goal) => (
-            //goal is an element in courseGoals
-            <View key={goal} style={styles.goalItem}>
-              <Text style={styles.goalText}>{goal}</Text>
-            </View>
-            //goal is a string so works in Text block
-            //every item in list should have a key prop to give unique identity to each item; helps react to update list more efficiently
-          ))}
-        </ScrollView>
+        <FlatList
+          data={courseGoals}
+          renderItem={(itemData) => {
+            return (
+              <View style={styles.goalItem}>
+                <Text style={styles.goalText}>{itemData.item}</Text>
+              </View>
+            );
+          }}
+        />
       </View>
     </View>
   );
