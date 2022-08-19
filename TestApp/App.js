@@ -1,6 +1,13 @@
 // import { StatusBar } from 'expo-status-bar';
 import { useState } from "react";
-import { StyleSheet, Text, View, Button, TextInput } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TextInput,
+  ScrollView,
+} from "react-native";
 //core components, must import elements you are using
 
 export default function App() {
@@ -16,7 +23,7 @@ export default function App() {
     setCourseGoals((currentCourseGoals) => [
       ...currentCourseGoals,
       enteredGoalText,
-    ]); //adds GoalText into the current goals array
+    ]); //append GoalText into the currentGoals array
   }
 
   return (
@@ -30,7 +37,18 @@ export default function App() {
         <Button title="Add Goal" onPress={addGoalHandler} />
       </View>
       <View style={styles.goalsContainer}>
-        <Text>List of goals: </Text>
+        {/* dictate amount of space */}
+        <ScrollView>
+          {/* make sure elements within space is scrollable */}
+          {courseGoals.map((goal) => (
+            //goal is an element in courseGoals
+            <View key={goal} style={styles.goalItem}>
+              <Text style={styles.goalText}>{goal}</Text>
+            </View>
+            //goal is a string so works in Text block
+            //every item in list should have a key prop to give unique identity to each item; helps react to update list more efficiently
+          ))}
+        </ScrollView>
       </View>
     </View>
   );
@@ -61,5 +79,14 @@ const styles = StyleSheet.create({
   },
   goalsContainer: {
     flex: 5,
+  },
+  goalItem: {
+    margin: 8,
+    padding: 8,
+    borderRadius: 6,
+    backgroundColor: "#5e0acc",
+  },
+  goalText: {
+    color: "white", //text color
   },
 });
